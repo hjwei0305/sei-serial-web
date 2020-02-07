@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-02 17:30:07
+* @Last Modified time: 2020-02-07 14:56:14
 */
 import { del, getList, save } from "./service";
 import { message } from "antd";
@@ -23,7 +23,7 @@ export default modelExtend(model, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp("/orgStructure/serialConfig", location.pathname)) {
+        if (pathMatchRegexp("/serialConfig", location.pathname)) {
           dispatch({
             type: "queryList"
           });
