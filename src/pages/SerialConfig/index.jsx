@@ -23,6 +23,7 @@ class SerialConfig extends Component {
 
   componentDidUpdate(_prevProps, prevState) {
     const { list, } = this.props.serialConfig;
+    console.log(list)
     if (!isEqual(prevState.list, list)) {
       this.setState({
         list,
@@ -182,7 +183,7 @@ class SerialConfig extends Component {
       },
       {
         title: '当前序列',
-        dataIndex: 'initialSerial',
+        dataIndex: 'currentSerial',
         width: 260,
       },
       {
