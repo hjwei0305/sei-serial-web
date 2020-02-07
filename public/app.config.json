@@ -1,5 +1,5 @@
 {
-  "name": "serial-web",
-  "entry": "/serial-web",
-  "base": "/serial-web"
+  "name": "sei-serial-web",
+  "entry": "/sei-serial-web",
+  "base": "/sei-serial-web"
 }
