@@ -13,7 +13,7 @@ const { SERVER_PATH } = constants;
 
 /** 获取列表*/
 export async function getList(params) {
-  const url = `${SERVER_PATH}/serial-service/serialNumberConfig/findAll`;
+  const url = `${SERVER_PATH}/sei-serial/serialNumberConfig/findAll`;
   return request({
     url,
     method: "GET",
@@ -23,7 +23,7 @@ export async function getList(params) {
 
 /** 保存 */
 export async function save(data) {
-  const url = `${SERVER_PATH}/serial-service/serialNumberConfig/save`;
+  const url = `${SERVER_PATH}/sei-serial/serialNumberConfig/save`;
   return request({
     url,
     method: "POST",
@@ -33,7 +33,7 @@ export async function save(data) {
 
 /** 删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/serial-service/serialNumberConfig/delete/${params}`;
+  const url = `${SERVER_PATH}/sei-serial/serialNumberConfig/delete/${params.id}`;
   return request({
     url,
     method: "POST",

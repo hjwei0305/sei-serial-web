@@ -150,7 +150,7 @@ class SerialConfig extends Component {
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要冻结吗?冻结后无法生成序列" })}
               onConfirm={_ => this.del(record)}
             >
               {
@@ -164,27 +164,25 @@ class SerialConfig extends Component {
         title: '实体类全路径',
         dataIndex: 'entityClassName',
         sorter: true,
-        width: 160,
+        width: 360,
       },
       {
         title: '名称',
         dataIndex: 'name',
-        width: 160,
+        width: 180,
       },
       {
         title: '表达式',
         dataIndex: 'expressionConfig',
-        width: 260,
+        width: 300,
       },
       {
         title: '初始序列',
         dataIndex: 'initialSerial',
-        width: 260,
       },
       {
         title: '当前序列',
         dataIndex: 'currentSerial',
-        width: 260,
       },
       {
         title: '生成方式',
@@ -194,6 +192,17 @@ class SerialConfig extends Component {
             return '服务端生成';
           }
           return 'sdk生成';
+        },
+      },{
+        title: '循环策略',
+        dataIndex: 'cycleStrategy',
+        render: text => {
+          switch(text){
+            case 'MAX_CYCLE': return "最大值重置";
+            case 'MONTH_CYCLE': return "每月重置";
+            case 'YEAR_CYCLE': return "每年重置";
+            default:return null;
+          }
         },
       },
       {
