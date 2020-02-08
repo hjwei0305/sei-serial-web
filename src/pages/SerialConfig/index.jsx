@@ -177,6 +177,10 @@ class SerialConfig extends Component {
         width: 300,
       },
       {
+        title: '隔离码',
+        dataIndex: 'isolationCode',
+      },
+      {
         title: '初始序列',
         dataIndex: 'initialSerial',
       },

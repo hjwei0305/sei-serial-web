@@ -60,6 +60,11 @@ class FormModal extends PureComponent {
               }]
             })(<Input disabled={!!rowData} />)}
           </FormItem>
+          <FormItem label={formatMessage({ id: "global.isolationCode", defaultMessage: "隔离码" })}>
+            {getFieldDecorator("isolationCode", {
+              initialValue: rowData ? rowData.isolationCode : "",
+            })(<Input />)}
+          </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
             {getFieldDecorator("name", {
               initialValue: rowData ? rowData.name : "",

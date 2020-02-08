@@ -16,7 +16,7 @@ export async function getList(params) {
   const url = `${SERVER_PATH}/sei-serial/serialNumberConfig/findAll`;
   return request({
     url,
-    method: "GET",
+    method: "POST",
     params,
   });
 }
