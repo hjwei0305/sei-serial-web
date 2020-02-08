@@ -38,7 +38,7 @@ export default modelExtend(model, {
         yield put({
           type: "updateState",
           payload: {
-            list: ds.data
+            list: ds.data.rows
           }
         });
       } else {

@@ -6,18 +6,19 @@
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
+import { isEmpty } from 'lodash'
 
 const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
 /** 获取列表*/
-export async function getList(params) {
+export async function getList(data={}) {
   const url = `${SERVER_PATH}/sei-serial/serialNumberConfig/findAll`;
   return request({
     url,
     method: "POST",
-    params,
+    data,
   });
 }
 

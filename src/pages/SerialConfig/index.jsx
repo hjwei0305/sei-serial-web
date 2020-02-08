@@ -23,7 +23,6 @@ class SerialConfig extends Component {
 
   componentDidUpdate(_prevProps, prevState) {
     const { list, } = this.props.serialConfig;
-    console.log(list)
     if (!isEqual(prevState.list, list)) {
       this.setState({
         list,
@@ -150,7 +149,7 @@ class SerialConfig extends Component {
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要冻结吗?冻结后无法生成序列" })}
+              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗?删除后无法恢复" })}
               onConfirm={_ => this.del(record)}
             >
               {
