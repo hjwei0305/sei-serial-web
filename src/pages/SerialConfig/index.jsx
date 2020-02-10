@@ -2,7 +2,6 @@ import React, { Component, Fragment, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual, } from 'lodash';
 import { Button, Popconfirm } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid'
@@ -10,7 +9,7 @@ import { constants } from "@/utils";
 import FormModal from "./FormModal";
 import styles from "./index.less";
 
-const { APP_MODULE_BTN_KEY } = constants;
+const { APP_MODULE_BTN_KEY, SERVER_PATH } = constants;
 const { authAction } = utils;
 
 @withRouter
@@ -18,24 +17,7 @@ const { authAction } = utils;
 class SerialConfig extends Component {
   state = {
     delRowId: null,
-    list: [],
   }
-
-  componentDidUpdate(_prevProps, prevState) {
-    const { list, } = this.props.serialConfig;
-    if (!isEqual(prevState.list, list)) {
-      this.setState({
-        list,
-      });
-    }
-  }
-
-  reloadData = _ => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "serialConfig/queryList"
-    });
-  };
 
   add = _ => {
     const { dispatch } = this.props;
@@ -74,7 +56,7 @@ class SerialConfig extends Component {
             showModal: false
           }
         });
-        this.reloadData();
+        this.tableRef.remoteDataRrefresh();
       }
     });
   };
@@ -94,7 +76,7 @@ class SerialConfig extends Component {
           this.setState({
             delRowId: null
           });
-          this.reloadData();
+          this.tableRef.remoteDataRrefresh();
         }
       });
     });
@@ -234,7 +216,7 @@ class SerialConfig extends Component {
               </Button>
             )
           }
-          <Button onClick={this.reloadData}>
+          <Button onClick={()=>this.tableRef.remoteDataRrefresh()}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
         </Fragment>
@@ -243,8 +225,14 @@ class SerialConfig extends Component {
     return {
       columns,
       loading: loading.effects["serialConfig/queryList"],
+      remotePaging: true,
       toolBar: toolBarProps,
-      dataSource: list,
+      searchProperties: [`entityClassName`,`name`,`isolationCode`],
+      store: {
+        url: `${SERVER_PATH}/sei-serial/serialNumberConfig/findAll`,
+        type: 'POST'
+      },
+      onTableRef: (ref)=> this.tableRef = ref
     };
   };
 
