@@ -158,8 +158,15 @@ class SerialConfig extends Component {
         width: 300,
       },
       {
-        title: '隔离码',
-        dataIndex: 'isolationCode',
+        title: '配置类型',
+        dataIndex: 'configType',
+        render: text => {
+          switch(text){
+            case 'CODE_TYPE': return "一般类型";
+            case 'BAR_TYPE': return "条码类型";
+            default:return null;
+          }
+        },
       },
       {
         title: '初始序列',

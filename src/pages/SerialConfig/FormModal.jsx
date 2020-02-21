@@ -16,6 +16,16 @@ const formItemLayout = {
 @Form.create()
 class FormModal extends PureComponent {
 
+  constructor(props) {
+    super(props);
+    
+    const { rowData } = this.props;
+    const defaultGenFlag = rowData?rowData.configType==='BAR_TYPE':false;
+    this.state = {
+      defaultGenFlag
+    };
+  }
+
   onFormSubmit = _ => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
@@ -29,7 +39,17 @@ class FormModal extends PureComponent {
     });
   };
 
+  configTypeChangeHandle = (configType) => {
+    if(configType==='BAR_TYPE'){
+      const { setFieldsValue } = this.props.form;
+      setFieldsValue({genFlag:true})
+    }
+    this.setState({defaultGenFlag:configType==='BAR_TYPE'})
+  }
+
   render() {
+
+    const { defaultGenFlag } = this.state;
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
     const title = rowData
@@ -51,74 +71,69 @@ class FormModal extends PureComponent {
         width={600}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label={formatMessage({ id: "global.entityClassName", defaultMessage: "实体类全路径" })}>
+          <FormItem label={"实体类全路径"}>
             {getFieldDecorator("entityClassName", {
               initialValue: rowData ? rowData.entityClassName : "",
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.entityClassName.required", defaultMessage: "实体类全路径不能为空" })
+                message:  "实体类全路径不能为空"
               }]
             })(<Input disabled={!!rowData} />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.isolationCode", defaultMessage: "隔离码" })}>
-            {getFieldDecorator("isolationCode", {
-              initialValue: rowData ? rowData.isolationCode : "",
-            })(<Input />)}
+          <FormItem label={formatMessage({ id: "configType", defaultMessage: "配置类型" })}>
+            {getFieldDecorator("configType", {
+              initialValue: rowData ? rowData.configType : "CODE_TYPE",
+            })(<Select onChange={this.configTypeChangeHandle}>
+              <Select.Option value={"CODE_TYPE"}>一般类型</Select.Option>
+              <Select.Option value={"BAR_TYPE"}>条码类型</Select.Option>
+            </Select>)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
+          <FormItem label={"名称"}>
             {getFieldDecorator("name", {
               initialValue: rowData ? rowData.name : "",
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
+                message: "名称不能为空"
               }]
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.expressionConfig", defaultMessage: "表达式" })}>
+          <FormItem label={"表达式"}>
             {getFieldDecorator("expressionConfig", {
               initialValue: rowData ? rowData.expressionConfig : "",
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.expressionConfig.required", defaultMessage: "表达式不能为空" })
+                message: "表达式不能为空"
               }]
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.initialSerial", defaultMessage: "初始序列" })}>
+          <FormItem label={ "初始序列"}>
             {getFieldDecorator("initialSerial", {
               initialValue: rowData ? rowData.initialSerial : 1,
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.name.required", defaultMessage: "初始序列不能为空" })
+                message:"初始序列不能为空"
               }]
-            })(<InputNumber style={{width:'100%'}}  min={1} />)}
+            })(<InputNumber style={{ width: '100%' }} min={1} />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.currentSerial", defaultMessage: "初始序列" })}>
-            {getFieldDecorator("currentSerial", {
-              initialValue: rowData ? rowData.currentSerial : 1,
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.currentSerial.required", defaultMessage: "初始序列不能为空" })
-              }]
-            })(<InputNumber style={{width:'100%'}} min={1} disabled={!!rowData} />)}
-          </FormItem>
-          <FormItem label={formatMessage({ id: "global.genFlag", defaultMessage: "生成方式" })}>
+
+          <FormItem label={formatMessage({ id: "genFlag", defaultMessage: "生成方式" })}>
             {getFieldDecorator("genFlag", {
-              initialValue: rowData ? rowData.genFlag : false,
+              initialValue: rowData ? rowData.genFlag : defaultGenFlag,
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.genFlag.required", defaultMessage: "初始序列不能为空" })
+                message: "初始序列不能为空"
               }]
             })(<Select>
               <Select.Option value={true}>服务端生成</Select.Option>
-              <Select.Option value={false}>sdk生成</Select.Option>
+              {defaultGenFlag ? null:<Select.Option value={false}>sdk生成</Select.Option> }
             </Select>)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.cycleStrategy", defaultMessage: "循环策略" })}>
+          <FormItem label={"循环策略"}>
             {getFieldDecorator("cycleStrategy", {
               initialValue: rowData ? rowData.cycleStrategy : "MAX_CYCLE",
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.cycleStrategy.required", defaultMessage: "循环策略不能为空" })
+                message:  "循环策略不能为空" 
               }]
             })(<Select>
               <Select.Option value={"MAX_CYCLE"}>最大值重置</Select.Option>
