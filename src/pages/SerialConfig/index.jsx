@@ -234,7 +234,7 @@ class SerialConfig extends Component {
       loading: loading.effects["serialConfig/queryList"],
       remotePaging: true,
       toolBar: toolBarProps,
-      searchProperties: [`entityClassName`,`name`,`isolationCode`],
+      searchProperties: [`entityClassName`,`name`],
       store: {
         url: `${SERVER_PATH}/sei-serial/serialNumberConfig/findAll`,
         type: 'POST'
