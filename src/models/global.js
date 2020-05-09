@@ -1,7 +1,7 @@
 import router from "umi/router";
 import { stringify } from "qs";
 import { message } from "antd";
-import { utils } from 'seid';
+import { utils } from 'suid';
 import { login } from "@/services/api";
 
 const { constants, storage } = utils;

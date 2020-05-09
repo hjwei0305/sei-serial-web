@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Form, Input, InputNumber, Select } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal } from 'seid'
+import { ExtModal } from 'suid'
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -18,7 +18,7 @@ class FormModal extends PureComponent {
 
   constructor(props) {
     super(props);
-    
+
     const { rowData } = this.props;
     const defaultGenFlag = rowData?rowData.configType==='BAR_TYPE':false;
     this.state = {
@@ -133,7 +133,7 @@ class FormModal extends PureComponent {
               initialValue: rowData ? rowData.cycleStrategy : "MAX_CYCLE",
               rules: [{
                 required: true,
-                message:  "循环策略不能为空" 
+                message:  "循环策略不能为空"
               }]
             })(<Select>
               <Select.Option value={"MAX_CYCLE"}>最大值重置</Select.Option>

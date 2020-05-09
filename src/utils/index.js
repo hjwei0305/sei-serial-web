@@ -1,5 +1,5 @@
 import constants from './constants';
-import { utils } from 'seid'
+import { utils } from 'suid'
 
 const { storage, constants: seidConstants } = utils;
 

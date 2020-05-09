@@ -74,11 +74,11 @@ export default {
     [
       'import',
       {
-        libraryName: 'seid',
+        libraryName: 'suid',
         libraryDirectory: 'es',
         style: true,
       },
-      'seid',
+      'suid',
     ],
   ],
   lessLoaderOptions: {
