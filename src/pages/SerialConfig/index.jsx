@@ -144,7 +144,6 @@ class SerialConfig extends Component {
       {
         title: '实体类全路径',
         dataIndex: 'entityClassName',
-        sorter: true,
         width: 360,
       },
       {
