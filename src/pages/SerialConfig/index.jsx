@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, utils, ExtIcon } from 'seid'
+import { ExtTable, utils, ExtIcon } from 'suid'
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
 import styles from "./index.less";
@@ -56,7 +56,7 @@ class SerialConfig extends Component {
             showModal: false
           }
         });
-        this.tableRef.remoteDataRrefresh();
+        this.tableRef.remoteDataRefresh();
       }
     });
   };
@@ -76,7 +76,7 @@ class SerialConfig extends Component {
           this.setState({
             delRowId: null
           });
-          this.tableRef.remoteDataRrefresh();
+          this.tableRef.remoteDataRefresh();
         }
       });
     });
@@ -222,7 +222,7 @@ class SerialConfig extends Component {
               </Button>
             )
           }
-          <Button onClick={()=>this.tableRef.remoteDataRrefresh()}>
+          <Button onClick={()=>this.tableRef.remoteDataRefresh()}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
         </Fragment>
