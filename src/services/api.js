@@ -1,15 +1,15 @@
-import { utils } from 'suid'
-import { constants } from "@/utils";
+import { utils } from 'suid';
+import { constants } from '@/utils';
 
 const { request } = utils;
 const { SERVER_PATH } = constants;
 
-/** 登录*/
+/** 登录 */
 export async function login(params) {
   const url = `${SERVER_PATH}/sei-auth/auth/login`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     headers: {
       needToken: false,
     },
@@ -17,12 +17,12 @@ export async function login(params) {
   });
 }
 
-/** 退出*/
+/** 退出 */
 export async function logout(params) {
   const url = `${SERVER_PATH}/sei-auth/auth/logout`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     headers: {
       needToken: false,
     },
@@ -30,3 +30,16 @@ export async function logout(params) {
   });
 }
 
+/** 获取当前用户有权限的功能项集合 */
+export async function getAuthorizedFeatures(userId) {
+  const url = `${SERVER_PATH}/sei-auth/auth/getAuthorizedFeatures`;
+  return request({
+    url,
+    params: { userId },
+  });
+}
+
+/** 获取验证码 */
+export async function getVerifyCode(reqId) {
+  return request.get(`${SERVER_PATH}/sei-auth/auth/verifyCode?reqId=${reqId}`);
+}

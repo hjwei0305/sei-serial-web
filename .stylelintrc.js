@@ -1,5 +1,6 @@
-const { stylelint } = require('@umijs/fabric');
+const fabric = require('@umijs/fabric');
 
 module.exports = {
-  ...stylelint,
+  "extends": "stylelint-config-standard",
+  ...fabric.stylelint,
 };
