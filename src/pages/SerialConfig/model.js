@@ -1,12 +1,11 @@
 /*
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
- * @Last Modified by: zp
- * @Last Modified time: 2020-05-09 11:12:24
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-08-10 10:51:56
  */
-import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { utils } from 'suid';
+import { utils, message } from 'suid';
 import { del, getList, save } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
