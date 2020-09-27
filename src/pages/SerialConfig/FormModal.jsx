@@ -152,8 +152,9 @@ class FormModal extends PureComponent {
             })(
               <Select>
                 <Select.Option value="MAX_CYCLE">最大值重置</Select.Option>
-                <Select.Option value="MONTH_CYCLE">每月重置</Select.Option>
                 <Select.Option value="YEAR_CYCLE">每年重置</Select.Option>
+                <Select.Option value="MONTH_CYCLE">每月重置</Select.Option>
+                <Select.Option value="DAY_CYCLE">每日重置</Select.Option>
               </Select>,
             )}
           </FormItem>
