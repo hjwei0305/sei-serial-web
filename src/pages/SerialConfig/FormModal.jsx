@@ -158,6 +158,24 @@ class FormModal extends PureComponent {
               </Select>,
             )}
           </FormItem>
+          {defaultGenFlag ? (
+            <FormItem label="返回策略">
+              {getFieldDecorator('returnStrategy', {
+                initialValue: rowData ? rowData.returnStrategy : 'NEW',
+                rules: [
+                  {
+                    required: true,
+                    message: '循环策略不能为空',
+                  },
+                ],
+              })(
+                <Select>
+                  <Select.Option value="NEW">总是最新</Select.Option>
+                  <Select.Option value="REPEAT">同关联ID不变</Select.Option>
+                </Select>,
+              )}
+            </FormItem>
+          ) : null}
         </Form>
       </ExtModal>
     );
