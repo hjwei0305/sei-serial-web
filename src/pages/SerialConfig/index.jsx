@@ -7,6 +7,7 @@ import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { ExtTable, utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import FormModal from './FormModal';
+import Reset from './Reset';
 import styles from './index.less';
 
 const { APP_MODULE_BTN_KEY, SERVER_PATH } = constants;
@@ -40,6 +41,49 @@ class SerialConfig extends Component {
       },
     });
   };
+
+  reset = rowData => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'serialConfig/updateState',
+      payload: {
+        showResetModal: true,
+        rowData,
+      },
+    });
+  };
+
+  updateCurrent = data => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'serialConfig/updateCurrent',
+      payload: {
+        ...data,
+      },
+    }).then(res => {
+      if (res.success) {
+        dispatch({
+          type: 'serialConfig/updateState',
+          payload: {
+            showResetModal: false,
+          },
+        });
+        this.tableRef.remoteDataRefresh();
+      }
+    });
+  };
+
+  queryCurrent = data => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'serialConfig/queryCurrent',
+      payload: {
+        ...data,
+      },
+    })
+  };
+
+
 
   save = data => {
     const { dispatch } = this.props;
@@ -91,6 +135,8 @@ class SerialConfig extends Component {
       type: 'serialConfig/updateState',
       payload: {
         showModal: false,
+        showResetModal: false,
+        current: null,
         rowData: null,
       },
     });
@@ -124,9 +170,17 @@ class SerialConfig extends Component {
                 className="edit"
                 onClick={() => this.edit(record)}
                 type="edit"
-                ignore="true"
                 antd
-              />,
+              />
+            )}
+            {authAction(
+              <ExtIcon
+                key={APP_MODULE_BTN_KEY.EDIT}
+                className="reset"
+                onClick={() => this.reset(record)}
+                type="redo"
+                antd
+              />
             )}
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
@@ -259,14 +313,33 @@ class SerialConfig extends Component {
     };
   };
 
+  getResetModalProps = () => {
+    const { loading, serialConfig } = this.props;
+    const { showResetModal, rowData, current } = serialConfig;
+    console.log(current)
+
+    return {
+      save: this.updateCurrent,
+      rowData,
+      showResetModal,
+      queryCurrent: this.queryCurrent,
+      current,
+      closeFormModal: this.closeFormModal,
+      saving: loading.effects['serialConfig/updateCurrent'],
+      querying: loading.effects['serialConfig/queryCurrent'],
+    };
+  };
+
+
   render() {
     const { serialConfig } = this.props;
-    const { showModal } = serialConfig;
+    const { showModal, showResetModal } = serialConfig;
 
     return (
       <div className={cls(styles['container-box'])}>
         <ExtTable {...this.getExtableProps()} />
         {showModal ? <FormModal {...this.getFormModalProps()} /> : null}
+        {showResetModal ? <Reset {...this.getResetModalProps()} /> : null}
       </div>
     );
   }

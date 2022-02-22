@@ -30,6 +30,28 @@ export async function save(data) {
     data,
   });
 }
+/** 保存 */
+export async function updateCurrent(data) {
+  let url = `${SERVER_PATH}/sei-serial/serialNumberConfig/refreshCurrentNumber?className=${data.className}&current=${data.current}`
+  if(data.isolation){
+     url = `${url}&isolation=${data.isolation}`;
+  }
+  return request({
+    url,
+    method: 'POST',
+  });
+}
+/** 保存 */
+export async function queryCurrent(data) {
+  let url = `${SERVER_PATH}/sei-serial/serialNumberConfig/getCurrentNumber?className=${data.className}`
+  if(data.isolation){
+     url = `${url}&isolation=${data.isolation}`;
+  }
+  return request({
+    url,
+    method: 'POST',
+  });
+}
 
 /** 删除 */
 export async function del(params) {

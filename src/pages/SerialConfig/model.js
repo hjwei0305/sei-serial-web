@@ -6,7 +6,7 @@
  */
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils, message } from 'suid';
-import { del, getList, save } from './service';
+import { del, getList, save, updateCurrent, queryCurrent } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
@@ -18,6 +18,7 @@ export default modelExtend(model, {
     list: [],
     rowData: null,
     showModal: false,
+    showResetModal: false
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -65,6 +66,39 @@ export default modelExtend(model, {
       }
 
       return re;
+    },
+    *updateCurrent({ payload }, { call }) {
+      const re = yield call(updateCurrent, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '修改成功' }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    *queryCurrent({ payload }, { call, put }) {
+      const re = yield call(queryCurrent, payload);
+      message.destroy();
+      if (re.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            current: re.data.currentNumber
+          },
+        });
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            current: null
+          },
+        });
+        message.error(re.message);
+      }
+
+      return re || {};
     },
   },
 });
